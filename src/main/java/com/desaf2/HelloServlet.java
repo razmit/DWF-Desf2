@@ -1,4 +1,4 @@
-package org.example.desaf2;
+package com.desaf2;
 
 import java.io.*;
 
