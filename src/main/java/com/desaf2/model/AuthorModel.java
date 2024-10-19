@@ -1,25 +1,46 @@
 package com.desaf2.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.util.Date;
+import java.util.Set;
 
 @Entity
+@Table(name = "author")
 public class AuthorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAuthor;
 
-    @Column(nullable = false)
+    @NotNull(message = "Name is required")
+    @Size(min = 3, max = 255, message = "Name must be between 3 and 255 characters")
+    @Column(name = "nameAuthor", nullable = false)
     private String nameAuthor;
 
-    @Column(nullable = false)
+    @NotNull(message = "Birthday is required")
+    @Past(message = "Birthday must be in the past")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthday", nullable = false)
     private Date birthday;
 
-    @Column(nullable = false)
+    @NotNull(message = "Phone number is required")
+    @Column(name = "phoneNumber", nullable = false)
     private int phoneNumber;
 
-    @Column(nullable = false)
+    @NotNull(message = "Gender is required")
+    @Column(name = "gender", nullable = false)
     private String gender;
+
+    @ManyToMany
+    @JoinTable(
+            name = "authorgenre",
+            joinColumns = @JoinColumn(name = "idAuthor"),
+            inverseJoinColumns = @JoinColumn(name = "idLitGenre")
+    )
+    private Set<LiteraryGenreModel> literaryGenres;
 
     public Long getIdAuthor() {
         return idAuthor;
