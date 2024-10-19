@@ -1,23 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="
-                http://xmlns.jcp.org/xml/ns/persistence
-                http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
-             version="2.2">
-    <persistence-unit name="AuthorsPU" transaction-type="JTA">
-        <jta-data-source>java:comp/env/jdbc/AuthorsDB</jta-data-source>
+             version="2.1">
+    <persistence-unit name="AuthorsPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.desaf2.model.AuthorModel</class>
         <class>com.desaf2.model.LiteraryGenreModel</class>
-        <!-- Añade más clases de entidad si es necesario -->
-
         <properties>
-            <!-- Configuraciones específicas de Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="12345"/>
+            <!-- Configuraciones adicionales -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <!-- Opcional: Actualiza el esquema de la base de datos -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.types.jackson.mapper" value="false"/>
+            <property name="hibernate.types.json_format_mapper" value="false"/>
+
         </properties>
     </persistence-unit>
 </persistence>
